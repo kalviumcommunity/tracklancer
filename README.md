@@ -1,6 +1,3 @@
-# Tracklancer
-
-
 1️⃣ Flutter Architecture 
 Framework Layer 
 
@@ -16,6 +13,7 @@ Engine Layer
 
 Handles rendering your dashboard UI efficiently.
 
+You don’t directly interact with this — but it ensures your API-fetched data renders smoothly.
 
 Embedder Layer
 
@@ -26,6 +24,21 @@ Internet access
 Secure token storage
 
 Platform-specific permissions
+
+
+2️⃣ Widget Tree (Applied to Your App)
+
+Your actual widget tree probably looks like:
+
+MaterialApp
+ └── AuthWrapper
+      ├── LoginScreen
+      └── DashboardScreen
+            ├── DeadlineList
+            │     └── ListView
+            │           └── DeadlineCard
+            └── BottomNavigationBar
+
 
 
 3️⃣ Where Flutter Actually Matters in Your App
@@ -40,12 +53,25 @@ Managing loading states
 
 Showing error states
 
+Example:
+
+When you fetch data:
+
+Future<void> fetchDeadlines() async {
+  final response = await http.get(...);
+  setState(() {
+    deadlines = parsedData;
+  });
+}
 
 Key idea:
 
 Flutter rebuilds the UI when API data arrives.
 
 That’s reactive programming in action.
+
+4️⃣ Dart Concepts That ACTUALLY Matter For You
+
 
 ✅ Async / Await
 
@@ -60,3 +86,11 @@ API calls return Future objects.
 Converting response body to Dart objects.
 
 ✅ Null safety
+
+Because API responses can contain null fields.
+
+
+
+..
+
+.
