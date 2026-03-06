@@ -1,6 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const TracklancerApp());
 }
 
@@ -21,8 +29,41 @@ class TracklancerApp extends StatelessWidget {
   }
 }
 
-class LandingPage extends StatelessWidget {
+class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
+
+  @override
+  State<LandingPage> createState() => _LandingPageState();
+}
+
+class _LandingPageState extends State<LandingPage> {
+  // STEP 2 — Save Calendar Data Properly
+  Future<void> saveCalendarEvent(String title) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+    
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .collection('calendar')
+        .add({
+          'title': title,
+          'createdAt': Timestamp.now(),
+        });
+  }
+
+  // STEP 3 — Real-Time Calendar Listener
+  Stream<QuerySnapshot> getCalendarEvents() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return const Stream.empty();
+    
+    return FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection('calendar')
+        .orderBy('createdAt', descending: true)
+        .snapshots();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +113,42 @@ class LandingPage extends StatelessWidget {
                   "Get Started Free",
                   style: TextStyle(fontSize: 16),
                 ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () async {
+                  try {
+                    await FirebaseAuth.instance.signInAnonymously();
+                    print("Logged in anonymously");
+                  } catch (e) {
+                    print("Error: $e");
+                  }
+                },
+                child: const Text("Test Login"),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () async {
+                  await saveCalendarEvent("Test Event: ${DateTime.now()}");
+                },
+                child: const Text("Add Calendar Event"),
+              ),
+              const SizedBox(height: 20),
+              StreamBuilder(
+                stream: getCalendarEvents(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  final docs = snapshot.data!.docs;
+
+                  return Column(
+                    children: docs
+                        .map((doc) => Text(doc['title']))
+                        .toList(),
+                  );
+                },
               ),
 
               const SizedBox(height: 40),
