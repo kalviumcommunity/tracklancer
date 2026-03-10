@@ -37,10 +37,6 @@ class ResponsiveHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // MediaQuery used to detect overall screen width.
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isTablet = screenWidth > 600;
-
     return Scaffold(
       // ---- HEADER SECTION ----
       appBar: AppBar(
