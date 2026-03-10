@@ -9,7 +9,7 @@ class ScrollableViews extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Scrollable Views Demo'),
+        title: const Text('Scrollable Views Implementation'),
       ),
       body: SafeArea(
         // SingleChildScrollView wraps the entire body so both sections
