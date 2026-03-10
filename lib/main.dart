@@ -9,6 +9,7 @@ import 'screens/user_input_form.dart';
 import 'screens/state_management_demo.dart';
 import 'screens/custom_widget_demo.dart';
 import 'screens/responsive_design_demo.dart';
+import 'screens/assets_demo_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,7 @@ class TracklancerApp extends StatelessWidget {
         '/state-management-demo': (context) => const StateManagementDemo(),
         '/custom-widget-demo': (context) => const CustomWidgetDemo(),
         '/responsive-design-demo': (context) => const ResponsiveDesignDemo(),
+        '/assets-demo': (context) => const AssetsDemoScreen(),
       },
     );
   }
