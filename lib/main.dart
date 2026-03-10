@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'screens/responsive_home.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'screens/login_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const TracklancerApp());
 }
 
@@ -11,12 +15,9 @@ class TracklancerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tracklancer',
+      title: "Tracklancer",
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const ResponsiveHome(),
+      home: const LoginScreen(),
     );
   }
 }
