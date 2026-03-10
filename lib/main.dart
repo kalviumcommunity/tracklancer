@@ -6,6 +6,7 @@ import 'screens/second_screen.dart';
 import 'screens/responsive_layout.dart';
 import 'screens/scrollable_views.dart';
 import 'screens/user_input_form.dart';
+import 'screens/state_management_demo.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,6 +31,7 @@ class TracklancerApp extends StatelessWidget {
         '/responsive-layout': (context) => const ResponsiveLayout(),
         '/scrollable-views': (context) => const ScrollableViews(),
         '/user-input-form': (context) => const UserInputForm(),
+        '/state-management-demo': (context) => const StateManagementDemo(),
       },
     );
   }
