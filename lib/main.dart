@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'screens/login_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/second_screen.dart';
+import 'screens/responsive_layout.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +25,7 @@ class TracklancerApp extends StatelessWidget {
       routes: {
         '/home': (context) => const HomeScreen(),
         '/second': (context) => const SecondScreen(),
+        '/responsive-layout': (context) => const ResponsiveLayout(),
       },
     );
   }
