@@ -1,69 +1,22 @@
 import 'package:flutter/material.dart';
+import 'screens/responsive_home.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const TracklancerApp());
 }
 
-class MyApp extends StatelessWidget {
+class TracklancerApp extends StatelessWidget {
+  const TracklancerApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Dashboard(),
+      title: 'Tracklancer',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const ResponsiveHome(),
     );
-  }
-}
-
-class Dashboard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-    var width = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Tracklancer"),
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16),
-        child: width < 600
-            ? Column(
-                children: buildCards(),
-              )
-            : Row(
-                children: buildCards(),
-              ),
-      ),
-    );
-  }
-
-  List<Widget> buildCards() {
-    return [
-      Expanded(
-        child: Card(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Text("Upcoming Meetings"),
-          ),
-        ),
-      ),
-      SizedBox(width: 10, height: 10),
-      Expanded(
-        child: Card(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Text("Emails"),
-          ),
-        ),
-      ),
-      SizedBox(width: 10, height: 10),
-      Expanded(
-        child: Card(
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Text("Freelance Tasks"),
-          ),
-        ),
-      ),
-    ];
   }
 }
